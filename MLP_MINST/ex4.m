@@ -1,32 +1,17 @@
 %% Machine Learning Online Class - Exercise 4 Neural Network Learning
-%  Instructions
-%  ------------
-% 
-%  This file contains code that helps you get started on the
-%  linear exercise. You will need to complete the following functions 
-%  in this exericse:
-%
 %     sigmoidGradient.m
 %     randInitializeWeights.m
 %     nnCostFunction.m
-%
-%  For this exercise, you will not need to change any code in this file,
-%  or any other files other than those mentioned above.
-%
 
 %% Initialization
 clear ; close all; clc
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = 120;  % 120 Input Images of Digits
-hidden_layer_size = 30;   % 25 hidden units
+hidden_layer_size = 200;   % 25 hidden units
 num_labels = 10;          % 10 labels, from 0 to 9   
 
-%% =========== Part 1: Loading and Visualizing Data =============
-%  We start the exercise by first loading and visualizing the dataset. 
-%  You will be working with a dataset that contains handwritten digits.
-%
-% Load Training Data
+%% =========== Loading and Visualizing Data =============
 fprintf('Loading Data ...\n')
 load('TrainSamples.csv');
 X=TrainSamples;
@@ -37,32 +22,21 @@ load('TestSamples1.csv');
 m = size(X, 1);
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-%% ================ Part 6: Initializing Pameters ================
-%  In this part of the exercise, you will be starting to implment a two
-%  layer neural network that classifies digits. You will start by
-%  implementing a function to initialize the weights of the neural network
-%  (randInitializeWeights.m)
+%% ================ Initializing Pameters ================
 fprintf('\nInitializing Neural Network Parameters ...\n')
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 % Unroll parameters
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
-
-%% =================== Part 8: Training NN ===================
-%  You have now implemented all the code necessary to train a neural 
-%  network. To train your neural network, we will now use "fmincg", which
-%  is a function which works similarly to "fminunc". Recall that these
-%  advanced optimizers are able to train our cost functions efficiently as
-%  long as we provide them with the gradient computations.
-%
+%% =================== Training NN ===================
 fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-options = optimset('MaxIter', 5000);
+options = optimset('MaxIter', 200);
 
 %  You should also try different values of lambda
-lambda = 30;
+lambda = 10;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...
@@ -84,12 +58,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
-%% ================= Part 10: Implement Predict =================
-%  After training the neural network, we would like to use it to predict
-%  the labels. You will now implement the "predict" function to use the
-%  neural network to predict the labels of the training set. This lets
-%  you compute the training set accuracy.
-
+%% ================= Predict =================
 predX = predict(Theta1, Theta2, X);
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(predX == (y+1))) * 100);
@@ -98,4 +67,6 @@ predT = predict(Theta1, Theta2, TestSamples1)-1;
 
 fprintf('\nTesting Set Accuracy: %f\n', mean(double(predT == TestLabels1)) * 100);
 
+save('w.mat');
 
+csvwrite('Result.csv',predT)

@@ -86,19 +86,6 @@ Theta2_grad=Theta2_grad+D3*a2/m;%10*26
 Theta1_grad=Theta1_grad+[zeros(size(Theta1_grad,1),1) Theta1(:,2:end)*lambda/m];
 Theta2_grad=Theta2_grad+[zeros(size(Theta2_grad,1),1) Theta2(:,2:end)*lambda/m];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 % -------------------------------------------------------------
 
 % =========================================================================
