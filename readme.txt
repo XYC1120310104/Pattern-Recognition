@@ -1,5 +1,4 @@
-git is a distributed version control system
-git is a free software distributed under the GPL
-Git has a mutable index called stage
-git tracks changes
-git test 
+模式识别
+MLP解决MINST
+GMM解决MINST
+线性分类器实现(Perceptron)
